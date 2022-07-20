@@ -27,9 +27,22 @@
         const WIDTH_CANVAS = COLUMNS * EDGE
         const HEIGHT_CANVAS = ROWS * EDGE
 
+        let canvas
+
         function setup(){
-            createCanvas(WIDTH_CANVAS, HEIGHT_CANVAS)
+            canvas = createCanvas(WIDTH_CANVAS, HEIGHT_CANVAS)
         }
+
+        function windowResized(){
+            let scale = windowWidth/width
+            if (scale >= 1){
+                return
+            }
+            canvas.style("width", width * scale + "px")
+            canvas.style("height", height * scale + "px")
+
+        }
+
         function draw(){
             background("black")
         }
