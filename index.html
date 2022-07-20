@@ -21,16 +21,29 @@
     </style>
     <!-- JSON -->
     <script>
+        // Game constants
         const COLUMNS = 40
         const ROWS = 30
         const EDGE = 20
         const WIDTH_CANVAS = COLUMNS * EDGE
         const HEIGHT_CANVAS = ROWS * EDGE
+        
+        //CONTROL VARIABLES
+        let up
+        let down 
+        let right
+        let left 
+        
+        //Scenario variables
+        let snake
 
+        //Environment variables html
         let canvas
 
         function setup(){
             canvas = createCanvas(WIDTH_CANVAS, HEIGHT_CANVAS)
+            windowResized()
+            snake = new Snake()
         }
 
         function windowResized(){
@@ -45,7 +58,36 @@
 
         function draw(){
             background("black")
+            snake.drawing()
         }
+
+        function keyPressed(){
+            switch (keyCode) {
+                case UP_ARROW:
+                    
+                    break;
+            
+                default:
+                    break;
+            }
+        }
+
+        function Snake(){
+            this.position = createVector(
+                COLUMNS/2,
+                ROWS/2
+            ) 
+            this.aceleration = createVector()
+            this.drawing = function(){
+                fill = "white"
+                rect(this.position.x * EDGE, 
+                this.position.y * EDGE, 
+                EDGE, 
+                EDGE
+                )
+            }
+        }
+
     </script>
 </body>
 </html>
