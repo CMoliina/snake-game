@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SNAKE GAME</title>
+    <!--Libraries p5.json-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+
+</head>
+<body>
+    <!-- css -->
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+    </style>
+    <!-- JSON -->
+    <script>
+        const COLUMNS = 40
+        const ROWS = 30
+        const EDGE = 20
+        const WIDTH_CANVAS = COLUMNS * EDGE
+        const HEIGHT_CANVAS = ROWS * EDGE
+
+        function setup(){
+            createCanvas(WIDTH_CANVAS, HEIGHT_CANVAS)
+        }
+        function draw(){
+            background("black")
+        }
+    </script>
+</body>
+</html>
