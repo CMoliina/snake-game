@@ -36,6 +36,7 @@
 
         //Scenario variables
         let snake
+        let food
 
         //Environment variables html
         let canvas
@@ -45,6 +46,7 @@
             canvas = createCanvas(WIDTH_CANVAS, HEIGHT_CANVAS)
             windowResized()
             snake = new Snake()
+            foodPosition()
             up = createVector(0, -1)
             down = createVector(0, 1)
             right = createVector(1, 0)
@@ -62,8 +64,13 @@
         }
 
         function draw(){
-            background("red")
+            background("#0b3446")
             snake.drawing()
+            rect(food.x * EDGE, food.y * EDGE, EDGE, EDGE)
+            if(snake.position.dist(food)==0){
+                snake.tam++
+                foodPosition()
+            }
         }
 
         function keyPressed(){
@@ -72,20 +79,39 @@
             }
             switch (keyCode) {
                 case UP_ARROW:
+                    if(snake.tail.length && snake.aceleration == down){
+                        break
+                    }
                     snake.aceleration = up
                     break;
                 case DOWN_ARROW:
+                if(snake.tail.length && snake.aceleration == up){
+                        break
+                    }
                     snake.aceleration = down
                     break;
                 case RIGHT_ARROW:
+                if(snake.tail.length && snake.aceleration == left){
+                        break
+                    }
                     snake.aceleration = right
                     break;
                 case LEFT_ARROW:
+                if(snake.tail.length && snake.aceleration == right){
+                        break
+                    }
                     snake.aceleration = left
                     break;
                 default:
                     break;
             }
+        }
+
+        function foodPosition(){
+            food = createVector(
+                int(random(COLUMNS)), 
+                int(random(ROWS))
+            )
         }
 
         function newGame(){
@@ -108,6 +134,8 @@
                 ROWS/2
             ) 
             this.aceleration = createVector()
+            this.tail = []
+            this.tam = 0
             this.hitSystem = function(){
                 if(this.position.x < 0 || this.position.y < 0){
                     return true
@@ -115,21 +143,33 @@
                 if(this.position.x >= COLUMNS || this.position.y >= ROWS){
                     return true
                 }
+                for (const c of this.tail){
+                    if(this.position.equals(c)){
+                        return true
+                    }
+                }
                 return false
             }
             this.drawing = function(){
                 fill = "white"
-                rect(this.position.x * EDGE, 
-                this.position.y * EDGE, 
+                rect(
+                constrain(this.position.x, 0, COLUMNS-1) * EDGE, 
+                constrain(this.position.y, 0, ROWS-1) * EDGE, 
                 EDGE, 
                 EDGE
                 )
+                for (const c of this.tail){
+                    rect(
+                    constrain(c.x, 0, COLUMNS-1) * EDGE, 
+                    constrain(c.y, 0, ROWS-1) * EDGE, 
+                    EDGE, 
+                    EDGE
+                    )
+                }
                 endGame()
-                if(this.hitSystem()){
-                    textAlign(CENTER, CENTER)
-                    textSize(50)
-                    text("GAME COMPLETED", width/2, height/2)
-                    noLoop()
+                this.tail.push(this.position.copy())
+                if(this.tail.length > this.tam){
+                    this.tail.splice(0, 1)
                 }
                 this.position.add(this.aceleration)
             }
