@@ -1,2 +1,2 @@
-# snake-game
-A javascript project
+# Snake Game :snake:
+A javascript project, just for fun
