@@ -33,7 +33,7 @@
         let down 
         let right
         let left 
-        
+
         //Scenario variables
         let snake
 
@@ -44,6 +44,10 @@
             canvas = createCanvas(WIDTH_CANVAS, HEIGHT_CANVAS)
             windowResized()
             snake = new Snake()
+            up = createVector(0, -1)
+            down = createVector(0, 1)
+            right = createVector(1, 0)
+            left = createVector (-1, 0)
         }
 
         function windowResized(){
@@ -64,9 +68,17 @@
         function keyPressed(){
             switch (keyCode) {
                 case UP_ARROW:
-                    
+                    snake.aceleration = up
                     break;
-            
+                case DOWN_ARROW:
+                    snake.aceleration = down
+                    break;
+                case RIGHT_ARROW:
+                    snake.aceleration = right
+                    break;
+                case LEFT_ARROW:
+                    snake.aceleration = left
+                    break;
                 default:
                     break;
             }
@@ -85,6 +97,7 @@
                 EDGE, 
                 EDGE
                 )
+                this.position.add(this.aceleration)
             }
         }
 
