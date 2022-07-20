@@ -1,2 +1,2 @@
 # Snake Game :snake:
-A javascript project, just for fun
+A basic project, just for fun
