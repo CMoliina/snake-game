@@ -41,6 +41,7 @@
         let canvas
 
         function setup(){
+            frameRate(15)
             canvas = createCanvas(WIDTH_CANVAS, HEIGHT_CANVAS)
             windowResized()
             snake = new Snake()
@@ -61,11 +62,14 @@
         }
 
         function draw(){
-            background("black")
+            background("red")
             snake.drawing()
         }
 
         function keyPressed(){
+            if(!isLooping()){
+                newGame()
+            }
             switch (keyCode) {
                 case UP_ARROW:
                     snake.aceleration = up
@@ -84,12 +88,35 @@
             }
         }
 
+        function newGame(){
+            snake = new Snake()
+            loop()
+        }
+
+        function endGame(){
+            if(snake.hitSystem()){
+                    textAlign(CENTER, CENTER)
+                    textSize(50)
+                    text("GAME COMPLETED", width/2, height/2)
+                    noLoop()
+                }
+        }
+
         function Snake(){
             this.position = createVector(
                 COLUMNS/2,
                 ROWS/2
             ) 
             this.aceleration = createVector()
+            this.hitSystem = function(){
+                if(this.position.x < 0 || this.position.y < 0){
+                    return true
+                }
+                if(this.position.x >= COLUMNS || this.position.y >= ROWS){
+                    return true
+                }
+                return false
+            }
             this.drawing = function(){
                 fill = "white"
                 rect(this.position.x * EDGE, 
@@ -97,6 +124,13 @@
                 EDGE, 
                 EDGE
                 )
+                endGame()
+                if(this.hitSystem()){
+                    textAlign(CENTER, CENTER)
+                    textSize(50)
+                    text("GAME COMPLETED", width/2, height/2)
+                    noLoop()
+                }
                 this.position.add(this.aceleration)
             }
         }
